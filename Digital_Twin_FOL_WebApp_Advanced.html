@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital Twin FOL Depot</title>
+<style>
+body{margin:0;font-family:Segoe UI,Arial;background:#08192d;color:#fff}
+header{background:#0b3d91;padding:18px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;padding:12px}
+.card{background:#102844;border-radius:12px;padding:15px;box-shadow:0 0 10px rgba(0,0,0,.4)}
+h2{margin-top:0;color:#7ec8ff}
+.tankfarm{display:flex;gap:20px;justify-content:center}
+.tank{width:90px;height:220px;border:3px solid #7ec8ff;border-radius:12px;position:relative}
+.fill{position:absolute;bottom:0;width:100%;background:#29b6f6}
+.metric{font-size:22px;font-weight:bold}
+button{padding:10px 14px;margin:4px;border:none;border-radius:6px;cursor:pointer}
+table{width:100%;border-collapse:collapse}
+td,th{border:1px solid #345;padding:6px}
+#map{height:220px;position:relative;background:#0c213a;border-radius:8px}
+.node{position:absolute;background:#29b6f6;border-radius:50%;width:20px;height:20px}
+.pipe{position:absolute;height:4px;background:#29b6f6;animation:flow 2s linear infinite}
+@keyframes flow{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
+.alert{font-weight:bold}
+</style>
+</head>
+<body>
+<header>
+<h1>DIGITAL TWIN – FOL DEPOT MODERNIZATION</h1>
+<p>Real-Time Monitoring | RFID Tracking | Predictive Maintenance | Leak Detection | Mission Simulation</p>
+</header>
+
+<div class="grid">
+
+<div class="card">
+<h2>Smart Tank Farm</h2>
+<div class="tankfarm">
+<div class="tank"><div id="f1" class="fill" style="height:78%"></div></div>
+<div class="tank"><div id="f2" class="fill" style="height:62%"></div></div>
+<div class="tank"><div id="f3" class="fill" style="height:91%"></div></div>
+</div>
+<p>Tank A: 780 KL | Tank B: 620 KL | Tank C: 910 KL</p>
+</div>
+
+<div class="card">
+<h2>Sensor Dashboard</h2>
+<p>Temperature: <span class="metric" id="temp">29</span> °C</p>
+<p>Density: <span class="metric">0.84</span> kg/L</p>
+<p>Viscosity: Normal</p>
+<p>Pressure: Normal</p>
+<p>Water Content: Within Limits</p>
+</div>
+
+<div class="card">
+<h2>Inventory & RFID</h2>
+<p>Total Stock: <span class="metric" id="stock">12450</span> KL</p>
+<p>RFID Tagged Containers: 247</p>
+<p>Bulk Receipts Today: 850 KL</p>
+<p>Issues Today: 620 KL</p>
+<button onclick="dispatchFuel()">Dispatch 500 KL</button>
+</div>
+
+<div class="card">
+<h2>Safety Monitoring</h2>
+<p id="alarm" class="alert">✅ NORMAL</p>
+<p>Leak Rate: <span id="loss">0</span> L/hr</p>
+<button onclick="simulateLeak()">Simulate Leak</button>
+<button onclick="resetAlarm()">Reset</button>
+</div>
+
+<div class="card">
+<h2>Predictive Maintenance</h2>
+<table>
+<tr><th>Equipment</th><th>Status</th></tr>
+<tr><td>Main Pump</td><td>Healthy</td></tr>
+<tr><td>Transfer Pump</td><td>Service Due in 12 Days</td></tr>
+<tr><td>Pipeline Sector B</td><td>Inspection Recommended</td></tr>
+<tr><td>Valve Network</td><td>Healthy</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>Digital Twin Layout</h2>
+<div id="map">
+<div class="node" style="left:20px;top:100px"></div>
+<div class="node" style="left:150px;top:40px"></div>
+<div class="node" style="left:280px;top:100px"></div>
+<div class="pipe" style="left:40px;top:108px;width:120px"></div>
+<div class="pipe" style="left:170px;top:48px;width:120px;transform:rotate(20deg)"></div>
+</div>
+<p>Animated flow from Receipt Point → Tank Farm → Issue Point</p>
+</div>
+
+<div class="card">
+<h2>AI Demand Prediction</h2>
+<p>Expected Demand Next 72 Hours: <b>1,950 KL</b></p>
+<p>Recommended Replenishment: <b>2,200 KL</b></p>
+<p>Operational Risk: <b>LOW</b></p>
+</div>
+
+<div class="card">
+<h2>Mission Simulation</h2>
+<p>Scenario: Corps-level offensive operation.</p>
+<p>Objective: Maintain stock above 10,000 KL while supporting forward troops.</p>
+<p>Respond to leaks, monitor tank levels, and dispatch fuel efficiently.</p>
+</div>
+
+</div>
+
+<script>
+function simulateLeak(){
+ document.getElementById('alarm').innerHTML='⚠ LEAK DETECTED';
+ document.getElementById('loss').innerHTML='42';
+}
+function resetAlarm(){
+ document.getElementById('alarm').innerHTML='✅ NORMAL';
+ document.getElementById('loss').innerHTML='0';
+}
+function dispatchFuel(){
+ let s=document.getElementById('stock');
+ s.innerHTML=Math.max(0,parseInt(s.innerHTML)-500);
+}
+setInterval(()=>{
+ let t=document.getElementById('temp');
+ t.innerHTML=(28+Math.floor(Math.random()*4));
+},3000);
+</script>
+</body>
+</html>
